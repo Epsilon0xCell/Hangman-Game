@@ -49,7 +49,7 @@ def play(word, lives):
             guess = input("Guess a letter (or the whole word): ").strip().lower()
         except EOFError:
             print()
-            return False
+            return None
         if not guess:
             continue
         if len(guess) == len(word) and guess.isalpha():
@@ -74,9 +74,20 @@ def play(word, lives):
     return False
 
 
+def lives_value(text):
+    try:
+        value = int(text)
+    except ValueError:
+        raise argparse.ArgumentTypeError("lives must be a number")
+    if not 1 <= value <= 6:
+        raise argparse.ArgumentTypeError("lives must be between 1 and 6")
+    return value
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Terminal hangman game.")
-    parser.add_argument("--lives", type=int, default=6, help="wrong guesses allowed (1-6)")
+    parser.add_argument("--lives", type=lives_value, default=6,
+                        help="wrong guesses allowed (1-6)")
     parser.add_argument("--word", help="specific word to play with")
     args = parser.parse_args(argv)
     word = (args.word or random.choice(WORDS)).lower()
@@ -85,10 +96,13 @@ def main(argv=None):
         return 1
     wins = losses = 0
     while True:
-        if play(word, max(1, min(args.lives, 6))):
+        result = play(word, args.lives)
+        if result is True:
             wins += 1
-        else:
+        elif result is False:
             losses += 1
+        else:
+            print("Game abandoned.")
         print(f"Score: {wins} win(s), {losses} loss(es)")
         try:
             again = input("Play again? [y/N] ").strip().lower()
@@ -96,7 +110,8 @@ def main(argv=None):
             break
         if again != "y":
             break
-        word = random.choice(WORDS)
+        if not args.word:
+            word = random.choice(WORDS)
     print("Thanks for playing!")
     return 0
 
