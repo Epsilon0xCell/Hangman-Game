@@ -46,6 +46,11 @@ def display(word, guessed):
 
 def play(word, lives):
     guessed, wrong = set(), 0
+    # I keep whole word attempts in their own set, apart from guessed. The
+    # board and the Guessed line are built from single letters, so a failed
+    # word attempt does not belong in that set, but a repeated attempt
+    # still has to be recognised or it would cost a life every time.
+    attempted_words = set()
     # I clamp lives to the number of drawings I actually have. main() already
     # limits --lives to 1 through 6 through lives_value(), so this clamp only
     # bites if someone imports play() and calls it directly with a bigger
@@ -88,19 +93,23 @@ def play(word, lives):
             # Empty input costs nothing and skips nothing else. I just redraw
             # the board and ask again.
             continue
-        # I try the whole word guess before the single letter checks. The
-        # order matters for a one letter custom word: a single letter then
-        # takes this branch, so a wrong try prints Wrong word and is never
-        # added to guessed below.
-        if len(guess) == len(word) and guess.isalpha():
+        # I try the whole word guess before the single letter checks, but
+        # only for words longer than one letter. A one letter word has to
+        # fall through to the letter path below: otherwise every guess at
+        # it prints Wrong word and is never recorded, even a letter the
+        # player has not tried yet in the letter sense.
+        if len(word) > 1 and len(guess) == len(word) and guess.isalpha():
             if guess == word:
                 print(f"\nYou win! The word was '{word}'.")
                 return True
-            # A wrong whole word guess costs a life but I do not record it
-            # in guessed. That means typing the same wrong word twice costs
-            # two lives, unlike a repeated single letter, which is free.
-            # I know that gap is there. I left it because the whole word
-            # path is a shortcut attempt, not a letter guess.
+            # A repeated whole word attempt is free, the same rule as a
+            # repeated letter. The first try costs a life and is recorded
+            # in attempted_words; the second try is caught here before it
+            # can cost again.
+            if guess in attempted_words:
+                print("Already guessed.")
+                continue
+            attempted_words.add(guess)
             wrong += 1
             print("Wrong word!")
             continue

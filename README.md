@@ -21,7 +21,9 @@ python3 hangman.py --word secret    # two-player: play with a specific word
 - Guess one letter at a time. A correct letter is revealed everywhere it
   occurs. A wrong letter costs one life.
 - Typing the whole word at the prompt also wins if it matches exactly;
-  a wrong whole-word guess costs one life.
+  a wrong whole-word guess costs one life. Typing that same wrong word
+  again prints `Already guessed.` and costs nothing, the same rule as a
+  repeated letter.
 - Empty input is ignored. A multi-letter entry that is not the whole word,
   a digit, or any other non-letter prints `Please enter a single letter.`
   Guessing a letter you already tried prints `Already guessed.` Neither
@@ -44,9 +46,22 @@ Without `--word`, each new game picks a new random word. Closing input
 (EOF) during a game abandons that game: it is not counted as a win or a
 loss. Exit status is 0 for a completed session.
 
+## Tests
+
+```bash
+python3 -m unittest
+```
+
+18 tests in `test_hangman.py`. I drive `play()` and `main()` with scripted
+input instead of playing by hand: wins by letters and by the whole word, a
+loss, repeated letters and repeated wrong whole words costing nothing, a
+one letter custom word, empty and non-letter guesses, EOF mid game, and
+the exit codes for a bad `--word`.
+
 ## Files
 
 - `hangman.py` - the whole game, including the built-in word list
+- `test_hangman.py` - the test suite above
 - `logo.png`, `banner.png` - project branding
 - `LICENSE` - MIT license
 
