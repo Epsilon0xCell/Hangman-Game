@@ -1,10 +1,20 @@
-![Hangman Game banner](banner.png)
+![Introduction banner](intro-banner.png)
 
 # Hangman-Game
 
 A custom Python Hangman game for the terminal.
 
 Requirements: Python 3, standard library only.
+
+![Hangman Game banner](banner.png)
+
+<img src="assets-scene.svg" alt="Animated themed scene" width="100%">
+
+> Enamel plate, red rim: repeating a guess prints Already guessed. and costs nothing, and a wrong whole word costs one life.
+
+> Enamel plate, cream rim: empty input is ignored, and closing input mid game abandons the round uncounted.
+
+<img src="sep-heavy.svg" alt="" width="100%">
 
 ## Run
 
@@ -13,6 +23,8 @@ python3 hangman.py                  # random word from the built-in list
 python3 hangman.py --lives 4        # allow only 4 wrong guesses
 python3 hangman.py --word secret    # two-player: play with a specific word
 ```
+
+<img src="sep-light.svg" alt="" width="100%">
 
 ## How to play
 
@@ -32,6 +44,8 @@ python3 hangman.py --word secret    # two-player: play with a specific word
   lives run out. You lose when the lives reach zero, and the word is then
   revealed.
 
+<img src="sep-heavy.svg" alt="" width="100%">
+
 ## Options
 
 - `--lives N` - wrong guesses allowed, from 1 to 6 (default 6). Values
@@ -46,6 +60,8 @@ Without `--word`, each new game picks a new random word. Closing input
 (EOF) during a game abandons that game: it is not counted as a win or a
 loss. Exit status is 0 for a completed session.
 
+<img src="sep-light.svg" alt="" width="100%">
+
 ## Tests
 
 ```bash
@@ -58,12 +74,16 @@ loss, repeated letters and repeated wrong whole words costing nothing, a
 one letter custom word, empty and non-letter guesses, EOF mid game, and
 the exit codes for a bad `--word`.
 
+<img src="sep-heavy.svg" alt="" width="100%">
+
 ## Files
 
 - `hangman.py` - the whole game, including the built-in word list
 - `test_hangman.py` - the test suite above
 - `logo.png`, `banner.png` - project branding
 - `LICENSE` - MIT license
+
+<img src="sep-light.svg" alt="" width="100%">
 
 ## License
 

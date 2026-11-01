@@ -1,111 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hangman Game: what it is, how it runs, where it stops</title>
-<meta name="description" content="A custom Python Hangman game for the terminal.">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hangman-Game: a terminal game served at the asado table</title>
+<meta name="description" content="A terminal Hangman game in Python 3, standard library alone, run with python3 hangman.py.">
 <style>
-:root {
-  --bg: #1a0c0c; --panel: #2a1412; --ink: #f0e6d6;
-  --mut: #381b18;
-  --acc: #c9a24b; --acc2: #94b2c4;
-  --line: #2a1412;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink);
-  font-family: Georgia, 'Times New Roman', serif; line-height: 1.55; }
-code, pre, .mono { font-family: 'Courier New', monospace; }
-a { color: var(--acc2); }
-.hero { padding: 3rem 6vw 1rem; }
-.hero img.banner { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; }
-.logo { width: 92px; height: 92px; border-radius: 18px;
-  border: 1px solid var(--line); }
-h1 { font-size: 2.4rem; margin: 0.4em 0 0.1em; }
-h2 { border-bottom: 2px solid var(--acc); padding-bottom: 0.2em;
-  margin-top: 2em; }
-.lede { font-size: 1.15rem; max-width: 62ch; }
-main { padding: 0 6vw 3rem; max-width: 1180px; margin: 0 auto; }
-.grid { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-.card { background: var(--panel); border: 1px solid var(--line);
-  border-radius: 12px; padding: 1rem 1.2rem; }
-.card.pop { animation: rise 0.7s ease both; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; } }
-pre.code { background: #101014; color: #e8e6df; padding: 1rem 1.2rem;
-  border-radius: 12px; overflow-x: auto; font-size: 0.86rem;
-  border-left: 5px solid var(--acc); }
-table { border-collapse: collapse; width: 100%; }
-td, th { border-bottom: 1px solid var(--line); padding: 0.45rem 0.6rem;
-  text-align: left; }
-.shots { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.shots img { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; background: #f4f1e8; }
-footer { padding: 2rem 6vw; border-top: 1px solid var(--line);
-  color: var(--mut); }
-.rail { display: flex; gap: 1.2rem; align-items: flex-start; }
-.rail nav { position: sticky; top: 1rem; min-width: 180px; }
-@media (max-width: 760px) { .rail { flex-direction: column; }
-  .rail nav { position: static; } }
-@media (prefers-reduced-motion: reduce) {
-  .card.pop { animation: none; } * { scroll-behavior: auto; } }
-</style>
-</head>
-<body class="layout-rail">
-<!-- This page exists for Hangman-Game alone: the layout (sidebar-rail),
-     the colors, and the type were picked for this project, not
-     shared with the other project pages. The code block below is
-     copied from the file it names, line for line. If it looks
-     plain, that is because the project is plain, and I would
-     rather the page match the project than dress it up. The one
-     thing I will not do here is oversell: what this project does
-     not do is stated on the page, not hidden from it. -->
-<header class="hero">
-  <img class="logo" src="assets/logo.png" alt="Hangman Game logo">
-  <img class="banner" src="assets/banner.png" alt="">
-  <h1>Hangman Game</h1>
-  <p class="mono"><a href="https://github.com/Epsilon0xCell/Hangman-Game">github.com/Epsilon0xCell/Hangman-Game</a></p>
+@font-face { font-family: AlegreyaSC; src: url(fonts/AlegreyaSC-Bold.ttf); } @font-face { font-family: AlegreyaSans; src: url(fonts/AlegreyaSans-Regular.ttf); }
+:root { --soy:#1a1210; --cream:#f0e6cc; --chili:#c43420; --bamboo:#c4a460; }
+* { box-sizing:border-box; } body { margin:0; background:var(--soy); color:#2a1c14; font-family:AlegreyaSans, sans-serif; line-height:1.6; }
+h1,h2,h3 { font-family:AlegreyaSC, serif; } header { padding:2.2rem 5vw 1rem; color:var(--cream); }
+header img.banner { width:100%; height:auto; border:4px solid #0c0806; } .logo { width:88px; height:88px; }
+.plate { display:inline-block; background:var(--cream); color:var(--soy); border:3px solid #0c0806; border-radius:50% / 18px; padding:.5rem 1.1rem; margin:.25rem; text-decoration:none; font-family:AlegreyaSC; position:relative; transition:transform .12s; }
+.plate:hover { transform:translateY(-2px) rotate(-.5deg); } .plate:active { transform:translateY(2px); } .plate:focus-visible { outline:none; border-bottom:5px solid var(--chili); }
+main { max-width:920px; margin:0 auto; padding:1rem 5vw 3rem; }
+.course { background:var(--cream); border:10px solid var(--bamboo); outline:2px solid #7a5c28; padding:1.2rem 1.5rem; margin:1.8rem 0; box-shadow:inset 0 0 0 3px #e2cf9e; }
+.ember { border:0; height:16px; background:radial-gradient(circle at 8px 8px, var(--chili) 5px, #241612 6px) repeat-x; background-size:26px 16px; margin:2rem 0; }
+pre.code { background:#101014; color:#e8e6df; padding:1rem; overflow-x:auto; font-size:.84rem; }
+table { border-collapse:collapse; width:100%; } td,th { border-bottom:1px solid var(--bamboo); padding:.4rem .6rem; text-align:left; } td.num { text-align:right; font-weight:700; }
+.loss { color:var(--chili); font-weight:700; } a { color:#7a2c14; }
+.shots { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); } .shots img { width:100%; height:auto; background:#f4f1e8; }
+footer { padding:1.6rem 5vw; color:#a88f6a; } .cream { color:var(--cream); }
+</style></head><body>
+<header>
+<img class="logo" src="assets/logo.png" alt="Hangman-Game logo"><img class="banner" src="assets/banner.png" alt="">
+<h1>Hangman-Game</h1>
+<p>A terminal Hangman game in Python 3, standard library alone, run with <code>python3 hangman.py</code>.</p>
+<nav aria-label="on this page"><a class="plate" href="#run">Run it</a><a class="plate" href="#files">The files</a><a class="plate" href="#sheets">The sheets</a><a class="plate" href="https://github.com/Epsilon0xCell/Hangman-Game">The repo</a></nav>
+<p><a href="https://github.com/Epsilon0xCell/Hangman-Game" style="color:var(--bamboo)">github.com/Epsilon0xCell/Hangman-Game</a></p>
 </header>
-
 <main>
-  <section class="rail">
-    <nav aria-label="on this page">
-      <p class="mono"><a href="#run">Run it</a><br>
-      <a href="#files">The files</a><br>
-      <a href="#sheets">The sheets</a><br>
-      <a href="https://github.com/Epsilon0xCell/Hangman-Game">The repo</a></p>
-    </nav>
-    <div>
-      <p class="lede">A custom Python Hangman game for the terminal.</p>
-      <div class="grid">
-        <div class="card pop"><h3>What it is</h3>
-          <p>Hangman Game: 5 files, 252 counted
-          lines across Python 197, Markdown 55. One job, done in the
-          open, in files you can read.</p></div>
-        <div class="card pop"><h3>The biggest piece</h3>
-          <p><code>hangman.py</code> carries the most
-          lines. If the project grows, that file is where the growth
-          lands first, for better or worse.</p></div>
-        <div class="card pop"><h3>The honest gap</h3>
-          <p>No test files yet. That is the honest gap, and the roadmap in the visuals folder says what the first one should cover.</p></div>
-      </div>
-      <section id="run">
-        <h2>Run it</h2>
-        <p>The repo README has the exact commands for this one. The
-        shape is the shape for most of my projects: clone it, read the
-        top file first so you know what will happen, then run it on
-        something you do not mind breaking.</p>
-        <p class="mono">$ git clone https://github.com/Epsilon0xCell/Hangman-Game.git<br>$ cd Hangman-Game</p>
-      </section>
-      
-  <section aria-label="real code">
-    <h2>The code, as it sits in the repo</h2>
-    <p>From <code>hangman.py</code>, line 38 on. I did
-    not tidy it for the page. What you see is what the file has.</p>
-    <pre class="code"><code>
+<section class="course" id="run"><h2>First course, how a round goes</h2>
+<p>The word shows as one underscore per letter. A correct letter appears everywhere it occurs. A wrong one costs a life and advances the gallows drawing through its seven stages, from empty frame to finished figure, the drawing scaled so even a two life game reaches the later stages.</p>
+<p>Typing the whole word at the prompt wins outright if exact; a wrong whole word costs one life. Repeating any guess, letter or word, prints <code>Already guessed.</code> and costs nothing. Empty entries are ignored, and a digit, a stray multi letter entry or other non letter prints <code>Please enter a single letter.</code> and also costs nothing. Losing reveals the word.</p>
+<pre class="code"><code>python3 hangman.py                  # random word from the built-in list
+python3 hangman.py --lives 4        # allow only 4 wrong guesses
+python3 hangman.py --word secret    # two-player: play with a specific word</code></pre></section>
+<hr class="ember">
+<section class="course"><h2>Second course, the settings on the table</h2>
+<p>The built in list holds 23 words, all computing vocabulary: python, hangman, keyboard, algorithm, encryption, mainframe, firewall and their companions in hangman.py.</p>
+<table><tr><th>Setting</th><th>Rule</th><th>Exit</th></tr>
+<tr><td><code>--lives</code></td><td>1 to 6, default 6, bad values rejected by argparse</td><td class="num">2</td></tr>
+<tr><td><code>--word</code></td><td>Secret word for two players, lowercased before play; anything but letters is rejected</td><td class="num">1</td></tr>
+<tr><td>Completed session</td><td>After each round the running wins and <span class="loss">losses</span> print; answering y plays again, reusing the custom word or drawing a fresh random one; closing input mid game abandons the round uncounted</td><td class="num">0</td></tr></table></section>
+<section class="course"><h2>Third course, proof the fire was tested</h2>
+<p><code>test_hangman.py</code> carries 18 tests run with <code>python3 -m unittest</code>, driving play() and main() on scripted input: wins by letters and by whole word, a loss, free repeats, a one letter custom word, empty and non letter guesses, EOF mid game, and bad --word exit codes.</p>
+<p>Functions doing the work: <code>display, play, lives_value, main</code>. Licence MIT.</p></section>
+<section aria-label="real code"><h2 class="cream">The code, as it sits in the repo</h2>
+<p class="cream">From <code>hangman.py</code>, opening at line 38 with the display function:</p>
+<pre class="code"><code>
 
 def display(word, guessed):
     # I test membership here instead of tracking positions. That is why one
@@ -126,41 +66,12 @@ def play(word, lives):
     print(&quot;Welcome to Hangman! Guess the word one letter at a time.&quot;)
     while wrong &lt; max_wrong:
         # I scale wrong onto the full drawing range. With 6 lives this is
-        # just wrong itself. With 2 lives, one wrong guess already lands on</code></pre>
-  </section>
-      <section id="files">
-        <h2>The files that matter</h2>
-        <table><tr><th>File</th><th>Lines</th></tr>
-        <tr><td><code>hangman.py</code></td><td>197</td></tr>
-        <tr><td><code>README.md</code></td><td>55</td></tr>
-        <tr><td><code>banner.png</code></td><td>0</td></tr>
-        <tr><td><code>logo.png</code></td><td>0</td></tr>
-        <tr><td><code>LICENSE</code></td><td>0</td></tr>
-        </table>
-        <p>Names doing the work: <span class="mono">display, play, lives_value, main</span>.</p>
-      </section>
-      <section id="sheets">
-        <h2>Drawn by hand</h2>
-        <p>I sketch my projects on notebook paper so I have to
-        understand them well enough to draw them. The full set,
-        with the counts and how they were counted, is the
-        <a href="https://github.com/Epsilon0xCell/Hangman-Game/tree/main/Hangman-Game-Visuals">Hangman-Game-Visuals</a>
-        folder in the repo. Nothing is drawn over the binder holes.
-        That is a rule, not a style.</p>
-        <div class="shots">
-          <img src="assets/architecture.png" alt="Hand drawn architecture sheet for Hangman Game">
-          <img src="assets/flowchart.png" alt="Hand drawn flowchart sheet for Hangman Game">
-          <img src="assets/product-map.png" alt="Hand drawn product map sheet for Hangman Game">
-        </div>
-      </section>
-    </div>
-  </section>
+        # just wrong itself. With 2 lives, one wrong guess already lands on</code></pre></section>
+<section id="files"><h2 class="cream">The files</h2>
+<p class="cream">Hangman-Game: 5 files and 252 lines, Python 197 and Markdown 55, hangman.py the largest.</p></section>
+<section id="sheets"><h2 class="cream">The sheets</h2>
+<p class="cream">The full set is the <a href="https://github.com/Epsilon0xCell/Hangman-Game/tree/main/Hangman-Game-Visuals" style="color:var(--bamboo)">Hangman-Game-Visuals</a> tree in the repo.</p>
+<div class="shots"><img src="assets/architecture.png" alt="Hand drawn architecture sheet for Hangman-Game"><img src="assets/flowchart.png" alt="Hand drawn flowchart sheet for Hangman-Game"><img src="assets/product-map.png" alt="Hand drawn product map sheet for Hangman-Game"></div></section>
 </main>
-<footer>
-  <p>Hangman Game is one of my projects. This page was written
-  from the repo itself on 2026-10-30: the counts are the
-  repo's counts, the code is the repo's code, and the gaps are the
-  repo's gaps.</p>
-</footer>
-</body>
-</html>
+<footer><p>Hangman-Game is one of my projects. Counts and code on this page come from the repo itself, and the test section credits the 18 tests in test_hangman.py.</p></footer>
+</body></html>
