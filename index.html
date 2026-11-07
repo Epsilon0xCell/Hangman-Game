@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hangman-Game: a terminal game served at the asado table</title>
+<title>Hangman-Game: scratched in bone white on black</title>
 <meta name="description" content="A terminal Hangman game in Python 3, standard library alone, run with python3 hangman.py.">
 <style>
-@font-face { font-family: AlegreyaSC; src: url(fonts/AlegreyaSC-Bold.ttf); } @font-face { font-family: AlegreyaSans; src: url(fonts/AlegreyaSans-Regular.ttf); }
-:root { --soy:#1a1210; --cream:#f0e6cc; --chili:#c43420; --bamboo:#c4a460; }
-* { box-sizing:border-box; } body { margin:0; background:var(--soy); color:#2a1c14; font-family:AlegreyaSans, sans-serif; line-height:1.6; }
-h1,h2,h3 { font-family:AlegreyaSC, serif; } header { padding:2.2rem 5vw 1rem; color:var(--cream); }
-header img.banner { width:100%; height:auto; border:4px solid #0c0806; } .logo { width:88px; height:88px; }
-.plate { display:inline-block; background:var(--cream); color:var(--soy); border:3px solid #0c0806; border-radius:50% / 18px; padding:.5rem 1.1rem; margin:.25rem; text-decoration:none; font-family:AlegreyaSC; position:relative; transition:transform .12s; }
-.plate:hover { transform:translateY(-2px) rotate(-.5deg); } .plate:active { transform:translateY(2px); } .plate:focus-visible { outline:none; border-bottom:5px solid var(--chili); }
-main { max-width:920px; margin:0 auto; padding:1rem 5vw 3rem; }
-.course { background:var(--cream); border:10px solid var(--bamboo); outline:2px solid #7a5c28; padding:1.2rem 1.5rem; margin:1.8rem 0; box-shadow:inset 0 0 0 3px #e2cf9e; }
-.ember { border:0; height:16px; background:radial-gradient(circle at 8px 8px, var(--chili) 5px, #241612 6px) repeat-x; background-size:26px 16px; margin:2rem 0; }
-pre.code { background:#101014; color:#e8e6df; padding:1rem; overflow-x:auto; font-size:.84rem; }
-table { border-collapse:collapse; width:100%; } td,th { border-bottom:1px solid var(--bamboo); padding:.4rem .6rem; text-align:left; } td.num { text-align:right; font-weight:700; }
-.loss { color:var(--chili); font-weight:700; } a { color:#7a2c14; }
-.shots { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); } .shots img { width:100%; height:auto; background:#f4f1e8; }
-footer { padding:1.6rem 5vw; color:#a88f6a; } .cream { color:var(--cream); }
+@font-face{font-family:'Frijole';src:url('fonts/Frijole-Regular.ttf') format('truetype')}
+@font-face{font-family:'Alegreya';src:url('fonts/Alegreya-Regular.ttf') format('truetype');font-weight:400}
+@font-face{font-family:'Alegreya';src:url('fonts/Alegreya-Medium.ttf') format('truetype');font-weight:500}
+@font-face{font-family:'Alegreya';src:url('fonts/Alegreya-Bold.ttf') format('truetype');font-weight:700}
+:root{--black:#0a0a0a;--bone:#ece3cb;--chalk:#f2c230;--ash:#8f887a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--black);color:#2a251c;font-family:'Alegreya',serif;font-size:1.08rem;line-height:1.6}
+h1,h2,h3{font-family:'Frijole',sans-serif;font-weight:400;letter-spacing:.03em}
+header{padding:2.2rem 5vw 1rem;color:var(--bone)}
+header img.banner{width:100%;height:auto;border:4px solid var(--bone)}
+.logo{width:88px;height:88px;border:2px solid var(--bone)}
+.plate{display:inline-block;background:transparent;color:var(--bone);border:2px solid var(--bone);border-radius:50%/18px;padding:.5rem 1.1rem;margin:.25rem;text-decoration:none;font-family:'Frijole',sans-serif;font-size:.85rem;position:relative;transition:transform .12s,border-color .12s}
+.plate:hover{transform:translateY(-2px) rotate(-.5deg);border-color:var(--chalk);color:var(--chalk)}
+.plate:active{transform:translateY(2px)}
+.plate:focus-visible{outline:none;border-bottom:5px solid var(--chalk)}
+main{max-width:920px;margin:0 auto;padding:1rem 5vw 3rem}
+.course{background:var(--bone);border:6px solid #57503f;outline:2px solid var(--bone);padding:1.2rem 1.5rem;margin:1.8rem 0;box-shadow:inset 0 0 0 3px #d8cdb0}
+.ember{border:0;height:14px;background:radial-gradient(circle at 7px 7px,var(--chalk) 4px,#1c1a15 5px) repeat-x;background-size:26px 14px;margin:2rem 0}
+pre.code{background:#050505;color:#e8e2d2;padding:1rem;overflow-x:auto;font-size:.86rem;border:1px solid #57503f;border-left:5px solid var(--chalk)}
+table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b3a888;padding:.4rem .6rem;text-align:left}td.num{text-align:right;font-weight:700}
+.loss{color:#a8231a;font-weight:700}
+a{color:#8a6410}
+.shots{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.shots img{width:100%;height:auto;background:#141310;border:2px solid var(--bone)}
+footer{padding:1.6rem 5vw;color:var(--ash)}
+.cream{color:var(--bone)}
 </style></head><body>
 <header>
-<img class="logo" src="assets/logo.png" alt="Hangman-Game logo"><img class="banner" src="assets/banner.png" alt="">
+<img class="logo" src="assets/logo.png" alt="Hangman-Game logo: a simple gallows post and beam scratched in bone white lines on black, beneath it a row of five short blank dashes, one chalk yellow dash glowing at the end"><img class="banner" src="assets/banner.png" alt="A black scratchboard field, on the left a gallows drawn in fine bone white lines with a rope hanging empty, across the bottom a long row of blank dashes waiting, a single chalk yellow star scratched above like a life counter">
 <h1>Hangman-Game</h1>
 <p>A terminal Hangman game in Python 3, standard library alone, run with <code>python3 hangman.py</code>.</p>
 <nav aria-label="on this page"><a class="plate" href="#run">Run it</a><a class="plate" href="#files">The files</a><a class="plate" href="#sheets">The sheets</a><a class="plate" href="https://github.com/Epsilon0xCell/Hangman-Game">The repo</a></nav>
