@@ -1,4 +1,5 @@
-Copyright 2013 The Alegreya Sans Project Authors (https://github.com/huertatipografica/Alegreya-Sans)
+Copyright (c) 2011, Sideshow (a DBA of Font Diner, Inc) (www.fontdiner.com),
+with Reserved Font Name "Frijole".
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

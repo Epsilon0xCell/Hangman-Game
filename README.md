@@ -1,12 +1,14 @@
-![Introduction banner](intro-banner.png)
+![Introduction: a close view of the dash row as one dash is scratched away to reveal a plain bone white shape beneath it, scratch shavings curling at the edges, the gallows small in the black distance, chalk yellow accent, scratchboard illustration](intro-banner.png)
 
 # Hangman-Game
+
+<p align="center"><img src="logo.png" alt="Hangman-Game logo: a simple gallows post and beam scratched in bone white lines on black, beneath it a row of five short blank dashes, one chalk yellow dash glowing at the end, fine scratch texture" width="200"></p>
 
 A custom Python Hangman game for the terminal.
 
 Requirements: Python 3, standard library only.
 
-![Hangman Game banner](banner.png)
+![Hangman Game banner: a black scratchboard field, on the left a gallows drawn in fine bone white lines with a rope hanging empty, across the bottom a long row of blank dashes waiting, a single chalk yellow star scratched above like a life counter](banner.png)
 
 <img src="assets-scene.svg" alt="Animated themed scene" width="100%">
 
